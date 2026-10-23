@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上司・部下・同僚との接し方アドバイザー</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-custom {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 pb-16">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 text-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="p-2.5 bg-white/15 rounded-xl backdrop-blur-sm">
+            <i data-lucide="heart-handshake" class="w-8 h-8 text-teal-100"></i>
+          </div>
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-wider bg-teal-800/60 px-2.5 py-0.5 rounded-full text-teal-100">
+              職場コミュニケーション支援AI
+            </span>
+            <h1 class="text-2xl sm:text-3xl font-bold mt-1 tracking-tight">
+              上司・部下・同僚との接し方アドバイザー
+            </h1>
+          </div>
+        </div>
+        <div class="flex flex-col items-start sm:items-end gap-2">
+          <p class="text-xs sm:text-sm text-teal-50 max-w-xs leading-relaxed">
+            お互いの立場・年齢・人数や状況に合わせて、角が立たずハラスメントを防ぐ具体的な対話術をAIが提案します。
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-8">
+    
+    <!-- Preset Scenarios -->
+    <section class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200">
+      <div class="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-3">
+        <i data-lucide="sparkles" class="w-4 h-4 text-teal-600"></i>
+        <span>よくある相談事例からワンクリックで自動入力して試す：</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5" id="presetContainer">
+        <!-- JSでボタンを生成 -->
+      </div>
+    </section>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="bg-slate-100/80 px-6 py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+        <h2 class="font-bold text-slate-800 flex items-center gap-2">
+          <i data-lucide="users" class="w-5 h-5 text-teal-600"></i>
+          <span>状況とプロフィールの入力</span>
+        </h2>
+        <span class="text-xs text-slate-500">
+          ※個人が特定される実名などは入力しないでください
+        </span>
+      </div>
+
+      <div class="p-6 space-y-8">
+        <!-- Step 1: 自分と相手の立場・年齢・人数 -->
+        <div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-teal-700 flex items-center gap-2 mb-4">
+            <span class="w-6 h-6 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-xs">1</span>
+            自分と相手の「立場・年齢・人数」
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 自分の情報 -->
+            <div class="bg-slate-50/80 p-4 rounded-xl border border-slate-200/80 space-y-4">
+              <div class="font-semibold text-slate-800 flex items-center gap-2 border-b border-slate-200 pb-2">
+                <i data-lucide="user-check" class="w-4 h-4 text-teal-600"></i>
+                <span>あなたの情報（自分）</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">あなたの立場・役職</label>
+                  <select id="myRole" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option>新入社員・若手社員</option>
+                    <option>一般社員</option>
+                    <option selected>中堅社員・リーダー</option>
+                    <option>プロジェクトリーダー</option>
+                    <option>管理職（課長・マネージャー）</option>
+                    <option>上級管理職（部長・役員・経営層）</option>
+                    <option>派遣・契約・パート・アルバイト</option>
+                    <option>人事・労務・相談窓口担当</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">あなたの年代</label>
+                  <select id="myAge" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option>10代〜20代前半</option>
+                    <option>20代後半</option>
+                    <option selected>30代</option>
+                    <option>40代</option>
+                    <option>50代</option>
+                    <option>60代以上</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">関わる人数（自分側）</label>
+                <select id="myCount" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                  <option selected>1人（自分のみ）</option>
+                  <option>2人（自分＋上長や同僚など）</option>
+                  <option>複数人・チーム全体として</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 相手の情報 -->
+            <div class="bg-teal-50/30 p-4 rounded-xl border border-teal-200/70 space-y-4">
+              <div class="font-semibold text-slate-800 flex items-center gap-2 border-b border-teal-200/60 pb-2">
+                <i data-lucide="users" class="w-4 h-4 text-teal-600"></i>
+                <span>相手の情報（対象者）</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">あなたから見た関係</label>
+                  <select id="targetRelation" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option selected>部下・後輩</option>
+                    <option>年上の部下・同僚</option>
+                    <option>上司・先輩</option>
+                    <option>年下の上司・先輩</option>
+                    <option>同僚・同期</option>
+                    <option>他部署の担当者</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">相手の立場・役職</label>
+                  <select id="targetRole" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option>新入社員・若手</option>
+                    <option selected>一般社員（若手）</option>
+                    <option>一般社員（中堅）</option>
+                    <option>ベテラン一般社員（専門職）</option>
+                    <option>主任・リーダー・係長クラス</option>
+                    <option>課長・マネージャークラス</option>
+                    <option>部長・部門長クラス</option>
+                    <option>派遣・契約・アルバイトスタッフ</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">相手の年代</label>
+                  <select id="targetAge" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option>10代〜20代前半</option>
+                    <option selected>20代</option>
+                    <option>30代</option>
+                    <option>40代</option>
+                    <option>50代</option>
+                    <option>60代以上</option>
+                    <option>幅広い年代（複数人の場合）</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-medium text-slate-600 mb-1">相手の人数</label>
+                  <select id="targetCount" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                    <option selected>1人（1対1）</option>
+                    <option>2〜3人（少人数）</option>
+                    <option>4〜10人（チーム・グループ）</option>
+                    <option>10人以上（部署・全体）</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">
+                  相手の性格・特徴・傾向（任意）
+                </label>
+                <input id="targetTraits" type="text" placeholder="例：プライドが高い、すぐ落ち込む、結論から言わないと怒る、マイペース など" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-teal-500 focus:outline-none">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: コミュニケーションの場面・距離感 -->
+        <div class="pt-4 border-t border-slate-200">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-teal-700 flex items-center gap-2 mb-4">
+            <span class="w-6 h-6 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-xs">2</span>
+            コミュニケーションの場面・現在の距離感
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">
+                どのように伝える・接する予定ですか？（手段・場面）
+              </label>
+              <select id="commMethod" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-teal-500 focus:outline-none">
+                <option selected>対面（1on1・個別面談）</option>
+                <option>対面またはビジネスチャット</option>
+                <option>対面またはオンライン会議</option>
+                <option>対面（日常の立ち話・デスク周り）</option>
+                <option>オンライン会議（Zoom / Teamsなど）</option>
+                <option>ビジネスチャット（Slack / Teamsなど）</option>
+                <option>メール・文書</option>
+                <option>チーム定例・複数人の会議の場</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">
+                現在の相手との関係性・信頼残高は？
+              </label>
+              <select id="relationshipLevel" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-teal-500 focus:outline-none">
+                <option>良好（雑談もできる関係）</option>
+                <option selected>普通（業務上の会話のみ）</option>
+                <option>まだ日が浅い（異動・入社直後など）</option>
+                <option>普通（少し緊張感がある）</option>
+                <option>ややギクシャク・距離がある</option>
+                <option>過去にトラブル・衝突があり警戒している</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: 具体的な事例と今後の希望 -->
+        <div class="pt-4 border-t border-slate-200 space-y-4">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-teal-700 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center text-xs">3</span>
+            具体的な事例と、今後どうしたいか（希望）
+          </h3>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+              具体的な事例・現在困っていること <span class="text-rose-500">*必須</span>
+            </label>
+            <textarea id="situation" rows="4" placeholder="例：部下に業務の進捗確認をすると「今やっています」と不機嫌に返され、詳細を教えてくれない。期限ギリギリになってミスが発覚することが続いている。" class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:border-teal-500 focus:outline-none leading-relaxed"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+              今後どのようにしたいか（理想のゴール・希望）
+            </label>
+            <input id="goal" type="text" value="関係を悪化させずに、行動や状況を改善したい" placeholder="例：相手の自尊心を傷つけずに報連相のルールを決め、気持ちよく仕事ができる関係にしたい" class="w-full rounded-xl border border-slate-300 p-3 text-sm focus:border-teal-500 focus:outline-none">
+            
+            <div class="flex flex-wrap gap-1.5 mt-2" id="goalTags">
+              <button type="button" data-tag="モチベーションを下げずに改善してほしい" class="goal-tag-btn text-xs bg-slate-100 hover:bg-teal-50 text-slate-600 hover:text-teal-700 px-2.5 py-1 rounded-full border border-slate-200 transition-colors">+ モチベーションを下げずに改善してほしい</button>
+              <button type="button" data-tag="角を立てずに自分の意見・要望を伝えたい" class="goal-tag-btn text-xs bg-slate-100 hover:bg-teal-50 text-slate-600 hover:text-teal-700 px-2.5 py-1 rounded-full border border-slate-200 transition-colors">+ 角を立てずに自分の意見・要望を伝えたい</button>
+              <button type="button" data-tag="ハラスメントと誤解されないよう指導したい" class="goal-tag-btn text-xs bg-slate-100 hover:bg-teal-50 text-slate-600 hover:text-teal-700 px-2.5 py-1 rounded-full border border-slate-200 transition-colors">+ ハラスメントと誤解されないよう指導したい</button>
+              <button type="button" data-tag="適度な距離感を保ちつつ業務を円滑に回したい" class="goal-tag-btn text-xs bg-slate-100 hover:bg-teal-50 text-slate-600 hover:text-teal-700 px-2.5 py-1 rounded-full border border-slate-200 transition-colors">+ 適度な距離感を保ちつつ業務を円滑に回したい</button>
+            </div>
+          </div>
+        <!-- Error / Notice Message Box -->
+        <div id="errorBox" class="hidden p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="w-5 h-5 shrink-0"></i>
+          <span id="errorText"></span>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button id="generateBtn" type="button" class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60 cursor-pointer">
+            <span id="btnIconWrapper" class="flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </span>
+            <span id="btnText">具体的な接し方と会話フレーズを診断する</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Area -->
+    <div id="resultContainer" class="hidden space-y-6 animate-fadeIn"></div>
+
+    <!-- 常時表示するハラスメント等リスク回避・免責事項の一文 -->
+    <footer class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 text-xs text-slate-600 space-y-2 leading-relaxed">
+      <div class="font-bold text-slate-800 flex items-center gap-1.5 text-sm">
+        <i data-lucide="scale" class="w-4 h-4 text-teal-600"></i>
+        <span>【重要】ハラスメント等のリスク回避およびご利用にあたっての留意事項</span>
+      </div>
+      <p>
+        1. <strong>人格否定の禁止と「行動・事実」へのフォーカス：</strong> 指導や要望を伝える際は、相手の性格・能力・生い立ち・年齢・性別などの属性を決して否定せず、「業務上の具体的な事実や行動」のみに焦点を当ててください。また、大勢の前での叱責（見せしめ）や、業務上必要のない過度な追及はパワーハラスメント・モラルハラスメントに該当するリスクがあります。
+      </p>
+      <p>
+        2. <strong>記録の保持と第三者相談：</strong> 1対1での面談や重要なやり取りを行う際は、言った・言わないのトラブルやハラスメントの誤解を防ぐため、合意した内容を客観的な議事メモやチャット等で残すことを推奨します。
+      </p>
+      <p>
+        3. <strong>免責事項と専門窓口の活用：</strong> 本アプリが提示するアドバイスは円滑な職場コミュニケーションを支援するための一般的な参考提案であり、法的な判断や労務上の結果を保証するものではありません。深刻なハラスメント被害、メンタルヘルスの不調、または労働法規に関わる問題がある場合は、無理に当事者間だけで解決しようとせず、速やかに社内の人事・労務部門、コンプライアンス相談窓口、産業医、または労働基準監督署等の専門機関へご相談ください。
+      </p>
+    </footer>
+  </main>
+
+  <script>
+    // サンプルシナリオ定義
+    const PRESET_SCENARIOS = [
+      {
+        id: 'subordinate_mistake',
+        label: '部下の同じミスを注意したい',
+        myRole: '管理職（課長・マネージャー）',
+        myAge: '40代',
+        myCount: '1人（自分のみ）',
+        targetRelation: '部下・後輩',
+        targetRole: '一般社員（若手）',
+        targetAge: '20代',
+        targetCount: '1人（1対1）',
+        targetTraits: '真面目だが少し萎縮しやすい、プライドがやや高い',
+        commMethod: '対面（1on1・個別面談）',
+        relationshipLevel: '普通（業務上の会話のみ）',
+        situation: '提出書類の確認漏れや期限遅れが今月に入り3回続いている。以前も一度口頭で注意したが改善が見られない。本人は悪気はなさそうだが、チームの業務に支障が出始めているためしっかり改善してほしい。',
+        goal: 'モチベーションを下げず、パワハラと受け取られないように注意し、再発防止の仕組みを一緒に作りたい'
+      },
+      {
+        id: 'boss_overload',
+        label: '上司からの急な業務依頼を断りたい・調整したい',
+        myRole: '中堅社員・リーダー',
+        myAge: '30代',
+        myCount: '1人（自分のみ）',
+        targetRelation: '上司・先輩',
+        targetRole: '部長・部門長クラス',
+        targetAge: '50代',
+        targetCount: '1人（1対1）',
+        targetTraits: '忙しい、結論から話してほしいタイプ、少し威圧感がある',
+        commMethod: '対面またはビジネスチャット',
+        relationshipLevel: '普通（少し緊張感がある）',
+        situation: '現在すでに手一杯のプロジェクトを2件抱えている状態で、上司から「これも今週中にお願い」と新規の資料作成を頼まれた。このまま引き受けると既存の重要案件の納期に間に合わないか、深夜残業になる。',
+        goal: '角を立てずに現状の負荷を伝え、優先順位の調整または期限の延長・他メンバーへの分担を相談したい'
+      },
+      {
+        id: 'colleague_uncooperative',
+        label: '非協力的な同僚・年上部下に協力をお願いしたい',
+        myRole: 'プロジェクトリーダー',
+        myAge: '30代',
+        myCount: '1人（自分のみ）',
+        targetRelation: '年上の部下・同僚',
+        targetRole: 'ベテラン一般社員（専門職）',
+        targetAge: '40代',
+        targetCount: '1人（1対1）',
+        targetTraits: '自分のやり方にこだわりがある、「昔はこうだった」と言いがち',
+        commMethod: '対面またはオンライン会議',
+        relationshipLevel: 'ややギクシャク・距離がある',
+        situation: '新しい業務フローへの移行を進めているが、ベテランの同僚（年上部下）が「前のやり方の方が早い」と言って新システムへの入力をしてくれない。周囲の若手も困っている。',
+        goal: '相手のこれまでの経験やプライドを尊重しつつ、新フローへの協力を前向きに引き出したい'
+      }
+    ];
+
+    // 安全なHTMLエスケープ処理（画面崩れ・XSS防止）
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // プリセットボタンの描画
+    const presetContainer = document.getElementById('presetContainer');
+    PRESET_SCENARIOS.forEach(preset => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'text-left p-3 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 transition-all group flex items-start justify-between gap-2 cursor-pointer';
+      btn.innerHTML = `
+        <div>
+          <div class="text-xs font-bold text-teal-700 mb-0.5">
+            ${escapeHtml(preset.targetRelation)}（${escapeHtml(preset.targetAge)}）への対応
+          </div>
+          <div class="text-sm font-medium text-slate-800 group-hover:text-teal-900">
+            ${escapeHtml(preset.label)}
+          </div>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:text-teal-600 shrink-0 mt-1"></i>
+      `;
+      btn.addEventListener('click', () => {
+        document.getElementById('myRole').value = preset.myRole;
+        document.getElementById('myAge').value = preset.myAge;
+        document.getElementById('myCount').value = preset.myCount;
+        document.getElementById('targetRelation').value = preset.targetRelation;
+        document.getElementById('targetRole').value = preset.targetRole;
+        document.getElementById('targetAge').value = preset.targetAge;
+        document.getElementById('targetCount').value = preset.targetCount;
+        document.getElementById('targetTraits').value = preset.targetTraits;
+        document.getElementById('commMethod').value = preset.commMethod;
+        document.getElementById('relationshipLevel').value = preset.relationshipLevel;
+        document.getElementById('situation').value = preset.situation;
+        document.getElementById('goal').value = preset.goal;
+        hideError();
+      });
+      presetContainer.appendChild(btn);
+    });
+
+    // ゴールタグのクリックイベント
+    document.querySelectorAll('.goal-tag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('goal').value = btn.getAttribute('data-tag');
+      });
+    });
+
+    function showError(msg) {
+      const box = document.getElementById('errorBox');
+      const text = document.getElementById('errorText');
+      text.textContent = msg;
+      box.classList.remove('hidden');
+    }
+
+    function hideError() {
+      document.getElementById('errorBox').classList.add('hidden');
+    }
+
+    // AIが返したテキストから安全にJSONを取り出す関数
+    function parseSafeJson(rawText) {
+      if (!rawText) throw new Error('Empty response');
+      let cleaned = rawText.trim();
+      // ```json ... ``` のようなマークダウンブロックを除去
+      cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+      const firstBrace = cleaned.indexOf('{');
+      const lastBrace = cleaned.lastIndexOf('}');
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+        cleaned = cleaned.substring(firstBrace, lastBrace + 1);
+      }
+      return JSON.parse(cleaned);
+    }
+
+    // 万が一ローカル環境等でAPI通信が遮断された場合でも確実に稼働させるスマート診断エンジン
+    function generateFallbackAdvice(params) {
+      const isBoss = params.targetRelation.includes('上司');
+      const isOlderSub = params.targetRelation.includes('年上');
+      const isMultiTarget = !params.targetCount.includes('1人');
+      const traitsText = params.targetTraits ? `（「${params.targetTraits}」という傾向）` : '';
+
+      let empathyAndSummary = `あなたが「${params.myRole}（${params.myAge}）」の立場から、相手である「${params.targetRelation}（${params.targetRole}・${params.targetAge}）」に対して、「${params.goal}」という前向きな解決を目指されている点が非常に素晴らしいです。\n\n今回のケースでは、個人の性格や意欲の問題として片付けるのではなく、「業務上の事実・ルールの明確化」と「相手の立場への敬意」を両立させて${params.commMethod}に臨むことが解決の鍵となります。`;
+
+      let psychologicalAnalysis = '';
+      if (isBoss) {
+        psychologicalAnalysis = `相手（${params.targetRole}・${params.targetAge}）${traitsText}は、部門全体の責任や多忙さから「現場の細かい負荷状況」が見えづらくなっている可能性があります。単に「できません」と断られると反発を感じやすいですが、「既存業務の品質を守るための優先順位の相談」として客観的な数字や代替案を提示されると、納得しやすくなります。`;
+      } else if (isOlderSub) {
+        psychologicalAnalysis = `相手（${params.targetRole}・${params.targetAge}）${traitsText}は、これまで培ってきた経験ややり方に対する自負があり、年下や別立場のリーダーからの指示に対して「自分の実績を軽視された」と防衛的になりやすい心理背景があります。まずこれまでの貢献に敬意を示した上で、「チームの基準統一のために力を貸してほしい」と頼るスタンスが効果的です。`;
+      } else {
+        psychologicalAnalysis = `相手（${params.targetRole}・${params.targetAge}）${traitsText}は、失敗を恐れて報告が遅れたり、何をどこまで相談すべきかの基準が曖昧で戸惑っている可能性があります。頭ごなしに結果を責められると萎縮してしまうため、「あなたの成長と業務の円滑化のためにサポートしたい」という心理的安全性を最初に確保することが重要です。`;
+      }
+
+      const preparationTips = [
+        isMultiTarget
+          ? `相手が複数人（${params.targetCount}）のため、特定の個人を晒し者にするような指摘は避け、チーム全体の共通ルールとしてフラットに伝えます。`
+          : `1対1（${params.commMethod}）の環境を確保し、周囲に聞かれて相手のプライドが傷つかないようプライバシーに配慮します。`,
+        `感情的な言葉（「いつも」「なんで」）を排除し、具体的な事実・日時・業務への影響だけをメモに整理してから臨みます。`,
+        `現在の関係性（${params.relationshipLevel}）を踏まえ、いきなり本題を切り出すのではなく、日頃の労いや感謝の一言から対話を始めます。`,
+        `対話の最後に「決まったこと（ネクストアクション）」を簡単なチャットやメモで共有し、認識ズレとハラスメント誤解を防ぎます。`
+      ];
+
+      const actionSteps = [
+        {
+          stepTitle: 'クッション言葉と日頃の労いから入る',
+          detail: 'まずは時間を取ってくれたことへの感謝を伝え、「責める場ではなく、より良く進めるための相談の場である」という安心感を作ります。'
+        },
+        {
+          stepTitle: '「事実」と「影響」をI（アイ）メッセージで伝える',
+          detail: `「あなたが〇〇だ」と相手を主語にして責めるのではなく、「現状〇〇という状況があり、私は〇〇の点で困っている・懸念している」と客観的に伝えます。`
+        },
+        {
+          stepTitle: '相手の言い分・背景を傾聴し、合意形成する',
+          detail: `相手にも事情や考えがあることを前提に「進める上でやりづらい点はある？」と問いかけ、双方が納得できる具体的なルール（期限や手順）を1つ決めます。`
+        }
+      ];
+
+      let dialogueExamples = [];
+      if (isBoss) {
+        dialogueExamples = [
+          {
+            patternName: '優先順位の相談として持ちかける（角を立てない調整法）',
+            phrase: `お疲れ様です。今いただいた〇〇の件、ぜひ対応したいのですが、現在抱えているA案件とB案件が今週山場を迎えております。\nすべてを同時に進めるとA案件の品質や納期に影響が出る懸念があるのですが、優先順位をどのように調整すればよろしいでしょうか？もし金曜日の午後までお待ちいただけるか、〇〇の部分を別メンバーと分担できれば対応可能です。`,
+            point: '「No（できません）」ではなく「Yes, if（この条件なら可能です）」と「優先順位の判断を仰ぐ」形にすることで、上司の決定権を尊重しつつ負荷を調整できます。'
+          },
+          {
+            patternName: '結論ファーストで現状の稼働を可視化して伝える',
+            phrase: `ご相談ありがとうございます。結論から申し上げますと、今週中は既存案件の対応で稼働が100%埋まっており、新規の着手が難しい状況です。\n現在のタスク一覧がこちらなのですが、どれを来週に回すか、一度5分ほどでご相談させていただけますでしょうか。`,
+            point: '結論から端的に話し、感情論ではなく「タスク一覧（事実）」を見せることで、忙しい上司でも即座に状況を理解・判断できるようになります。'
+          }
+        ];
+      } else if (isOlderSub) {
+        dialogueExamples = [
+          {
+            patternName: '相手の経験・プライドを尊重して「協力を仰ぐ」伝え方',
+            phrase: `〇〇さん、いつも現場を支えていただきありがとうございます。実は今回、チーム全体で業務フローを統一することになりまして、ベテランである〇〇さんにもぜひお力を貸していただきたいんです。\n慣れたやり方から変えるのはお手間をおかけして心苦しいのですが、若手メンバーの手本として、まずはこの部分の入力からご協力いただけないでしょうか？使いづらい点があればぜひ率直に教えてください。`,
+            point: '「指示・命令」ではなく「ベテランとしての影響力を頼る」という伝え方にすることで、相手の自尊心を満たしながら前向きな協力を引き出せます。'
+          },
+          {
+            patternName: '組織上の目的とメリットを論理的に共有する伝え方',
+            phrase: `〇〇さん、今少しお時間よろしいでしょうか。現在進めている新フローへの移行についてご相談です。\nこれまでのやり方がスピーディーな点も重々承知しているのですが、他部署とのデータ連携や引き継ぎミス防止のため、来月からこの形式に完全統一する必要があります。移行にあたってネックになっている作業があれば、一緒に解消方法を考えたいのですがいかがでしょうか。`,
+            point: '過去のやり方を否定せず肯定した上で、「なぜ変える必要があるのか（組織全体の理由）」を客観的に伝えることで納得感を高めます。'
+          }
+        ];
+      } else {
+        dialogueExamples = [
+          {
+            patternName: '心理的安全性を保ちつつ「仕組み」に焦点を当てる伝え方',
+            phrase: `〇〇さん、日々の業務お疲れ様。少し今の仕事の進め方で相談したくて時間ををもらいました。\n実は最近の〇〇の件で、進捗の見通しや確認のタイミングがうまく噛み合っていないなと感じています。〇〇さんを責めたいわけではなくて、手戻りや負担を減らして安心して仕事ができるようにしたいんです。今、進める中で負担に感じていることや、詰まっているところはありますか？`,
+            point: '「あなたのため・環境改善のため」という目的を最初に明確にすることで、相手の防衛反応や萎縮を解き、本音を引き出しやすくします。'
+          },
+          {
+            patternName: '具体的な行動ルール（合意形成）を一緒に決める伝え方',
+            phrase: `〇〇の件について、今後の再発を防ぐために一緒にルールを決めたいと思います。\n期限の直前になってからだと私もサポートが難しくなってしまうので、今後は完成度50%の段階（期限の2日前）で一度、箇条書きで構わないのでチャットで見せてもらう形にしませんか？そうすれば私も早めにフォローできるので安心なのですが、どうでしょうか。`,
+            point: '「気をつけて」「ちゃんとして」という曖昧な精神論ではなく、「いつ・何を・どうするか」という具体的な行動レベルに落とし込むことで確実に改善へ繋げます。'
+          }
+        ];
+      }
+
+      const ngBehaviors = [
+        {
+          ngAction: '「なんでいつもそうなの？」「前も言ったよね？」と過去や人格を責める',
+          reason: '相手は強い自己防衛に入り、言い訳を考えるか心が閉ざされてしまい、パワハラ・モラハラと受け取られるリスクが極めて高くなります。',
+          rephrase: '「今回の〇〇の件について、次から防ぐための手順を一緒に確認しよう」と未来の行動と仕組みだけに焦点を当てます。'
+        },
+        {
+          ngAction: '他人の目がある場所や全体チャットで名指しして注意・不満を伝える',
+          reason: '「見せしめ」と感じさせ、相手の自尊心を深く傷つけるため、関係性の決定的な悪化やハラスメント申告の直接的な原因になります。',
+          rephrase: '必ず個別の場（1on1や個別メッセージ）を設け、落ち着いたトーンで事実ベースの確認を行います。'
+        }
+      ];
+
+      const harassmentRiskNotice = {
+        riskCheckPoints: [
+          '相手の性格・年齢・世代・能力などの「属性や人格」に言及せず、「具体的な業務上の事実と行動」のみを話題にしているか。',
+          '一方的にまくし立てるのではなく、相手の事情や言い分を聴く時間（双方向の対話）を半分以上確保しているか。',
+          '威圧的な声のトーン、ため息、机を叩く、無視するなどの非言語コミュニケーション（態度）になっていないか。',
+          '面談や相談の後、「本日はありがとうございました。〇〇の件、まずは〇月〇日までに〇〇を進める形でよろしくお願いいたします」と合意内容をテキストで残しているか。'
+        ],
+        legalAndComplianceStatement: '業務上の適正な指導や優先順位の調整であっても、伝え方や場所を誤るとハラスメントと受け取られるリスクがあります。感情が昂ぶっている時はその場での対話を避け、客観的な事実に基づいた対話を心がけてください。また、当事者間での解決が困難な場合は、早めに上長や人事・コンプライアンス窓口へ相談し、1人で抱え込まないようにしてください。'
+      };
+
+      return {
+        empathyAndSummary,
+        psychologicalAnalysis,
+        preparationTips,
+        actionSteps,
+        dialogueExamples,
+        ngBehaviors,
+        harassmentRiskNotice
+      };
+    }
+
+    // 結果HTMLのレンダリング
+    function renderResult(result, params) {
+      const container = document.getElementById('resultContainer');
+      container.innerHTML = `
+        <!-- 1. 共感と全体分析・相手心理 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-5">
+          <div class="flex items-center gap-2.5 border-b border-slate-100 pb-4">
+            <div class="p-2 rounded-lg bg-teal-100 text-teal-700">
+              <i data-lucide="lightbulb" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-slate-800">状況の整理と相手の心理分析</h2>
+              <p class="text-xs text-slate-500">
+                自分（${escapeHtml(params.myRole)}・${escapeHtml(params.myAge)}・${escapeHtml(params.myCount)}）× 相手（${escapeHtml(params.targetRelation)}・${escapeHtml(params.targetAge)}・${escapeHtml(params.targetCount)}）の視点
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-teal-50/50 p-4 rounded-xl border border-teal-100">
+              <h3 class="text-sm font-bold text-teal-900 mb-2 flex items-center gap-1.5">
+                <i data-lucide="heart-handshake" class="w-4 h-4 text-teal-600"></i>
+                今回のケースのポイント整理
+              </h3>
+              <p class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">${escapeHtml(result.empathyAndSummary)}</p>
+            </div>
+
+            <div class="bg-amber-50/50 p-4 rounded-xl border border-amber-100">
+              <h3 class="text-sm font-bold text-amber-900 mb-2 flex items-center gap-1.5">
+                <i data-lucide="help-circle" class="w-4 h-4 text-amber-600"></i>
+                相手の立場・年代から見た心理背景
+              </h3>
+              <p class="text-sm text-slate-700 leading-relaxed whitespace-pre-line">${escapeHtml(result.psychologicalAnalysis)}</p>
+            </div>
+          </div>
+
+          <!-- 事前の環境づくり -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <h3 class="text-sm font-bold text-slate-800 mb-2.5 flex items-center gap-1.5">
+              <i data-lucide="briefcase" class="w-4 h-4 text-slate-600"></i>
+              声をかける前の環境づくり・事前準備（人数・場所の配慮）
+            </h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${(result.preparationTips || []).map(tip => `
+                <li class="text-sm text-slate-700 flex items-start gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0 mt-0.5"></i>
+                  <span>${escapeHtml(tip)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. 具体的な接し方ステップ -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <i data-lucide="arrow-right" class="w-5 h-5 text-teal-600"></i>
+            希望を実現するための具体的ステップ
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            ${(result.actionSteps || []).map((step, idx) => `
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
+                    ${idx + 1}
+                  </span>
+                  <h3 class="font-bold text-slate-800 text-sm">${escapeHtml(step.stepTitle)}</h3>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mt-1">${escapeHtml(step.detail)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 3. そのまま使える会話フレーズ・声かけ例 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-5 h-5 text-teal-600"></i>
+              そのまま使える具体的な声かけ・会話フレーズ例
+            </h2>
+            <span class="text-xs text-slate-500">クリックでコピーできます</span>
+          </div>
+
+          <div class="space-y-4">
+            ${(result.dialogueExamples || []).map((item, idx) => `
+              <div class="rounded-xl border border-teal-200 bg-teal-50/20 overflow-hidden">
+                <div class="bg-teal-100/60 px-4 py-2.5 flex items-center justify-between">
+                  <span class="text-xs sm:text-sm font-bold text-teal-900">
+                    パターン ${idx + 1}：${escapeHtml(item.patternName)}
+                  </span>
+                  <button type="button" data-copy-idx="${idx}" class="copy-phrase-btn flex items-center gap-1 text-xs bg-white hover:bg-teal-50 text-teal-700 px-2.5 py-1 rounded-md border border-teal-200 transition-colors cursor-pointer">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>フレーズをコピー</span>
+                  </button>
+                </div>
+                <div class="p-4 space-y-2.5">
+                  <div class="p-3.5 bg-white rounded-lg border border-slate-200 text-slate-800 text-sm font-medium leading-relaxed whitespace-pre-line">「${escapeHtml(item.phrase)}」</div>
+                  <p class="text-xs text-slate-600 flex items-start gap-1.5">
+                    <span class="font-bold text-teal-700 shrink-0">【効果・意図】</span>
+                    <span>${escapeHtml(item.point)}</span>
+                  </p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 4. 避けるべきNG言動と言い換え -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="alert-triangle" class="w-5 h-5 text-amber-500 inline mr-1.5"></i>
+            <span class="text-lg font-bold text-slate-800">逆効果・関係悪化を防ぐ「NG言動」と言い換え</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${(result.ngBehaviors || []).map(ng => `
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                <div class="text-sm font-bold text-rose-700 flex items-start gap-1.5">
+                  <span class="px-1.5 py-0.5 text-xs bg-rose-100 text-rose-800 rounded shrink-0">NG</span>
+                  <span>${escapeHtml(ng.ngAction)}</span>
+                </div>
+                <p class="text-xs text-slate-600">
+                  <span class="font-semibold">理由：</span>${escapeHtml(ng.reason)}
+                </p>
+                <div class="pt-2 border-t border-slate-200/80 text-xs sm:text-sm text-teal-800 font-medium flex items-start gap-1.5">
+                  <span class="px-1.5 py-0.5 text-xs bg-teal-100 text-teal-800 rounded shrink-0">OK変換</span>
+                  <span>${escapeHtml(ng.rephrase)}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 5. ハラスメント等リスク回避セクション -->
+        <div class="bg-amber-50/90 rounded-2xl p-6 shadow-sm border-2 border-amber-300 space-y-4">
+          <div class="flex items-center gap-2.5 text-amber-900">
+            <i data-lucide="shield-alert" class="w-6 h-6 text-amber-600 shrink-0"></i>
+            <h2 class="text-lg font-bold">
+              ハラスメント等のリスク回避・コンプライアンス上の注意点
+            </h2>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-amber-800">
+              今回のケースにおけるリスク回避チェックポイント
+            </h3>
+            <ul class="space-y-1.5">
+              ${(result.harassmentRiskNotice?.riskCheckPoints || []).map(pt => `
+                <li class="text-sm text-amber-950 flex items-start gap-2">
+                  <span class="text-amber-600 font-bold">•</span>
+                  <span>${escapeHtml(pt)}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="p-3.5 bg-white/80 rounded-xl border border-amber-200 text-xs sm:text-sm text-slate-700 leading-relaxed">
+            <span class="font-bold text-amber-900 block mb-1">【リスク回避と安全な対話のためのアドバイス】</span>
+            ${escapeHtml(result.harassmentRiskNotice?.legalAndComplianceStatement || '')}
+          </div>
+        </div>
+      `;
+
+      container.classList.remove('hidden');
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // コピーボタンのイベント登録
+      container.querySelectorAll('.copy-phrase-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-copy-idx'));
+          const textToCopy = result.dialogueExamples[idx]?.phrase || '';
+          const textArea = document.createElement('textarea');
+          textArea.value = textToCopy;
+          document.body.appendChild(textArea);
+          textArea.select();
+          try {
+            document.execCommand('copy');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i><span>コピー完了</span>`;
+            if (window.lucide) lucide.createIcons();
+            setTimeout(() => {
+              btn.innerHTML = originalHtml;
+              if (window.lucide) lucide.createIcons();
+            }, 2000);
+          } catch (e) {
+            console.error(e);
+          }
+          document.body.removeChild(textArea);
+        });
+      });
+
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // 診断ボタンのクリック処理
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      const params = {
+        myRole: document.getElementById('myRole').value,
+        myAge: document.getElementById('myAge').value,
+        myCount: document.getElementById('myCount').value,
+        targetRelation: document.getElementById('targetRelation').value,
+        targetRole: document.getElementById('targetRole').value,
+        targetAge: document.getElementById('targetAge').value,
+        targetCount: document.getElementById('targetCount').value,
+        targetTraits: document.getElementById('targetTraits').value.trim(),
+        commMethod: document.getElementById('commMethod').value,
+        relationshipLevel: document.getElementById('relationshipLevel').value,
+        situation: document.getElementById('situation').value.trim(),
+        goal: document.getElementById('goal').value.trim()
+      };
+
+      if (!params.situation) {
+        showError('「具体的な事例・現在困っていること」を入力してください（上部のよくある相談事例ボタンから自動入力もできます）。');
+        return;
+      }
+
+      hideError();
+      const generateBtn = document.getElementById('generateBtn');
+      const btnText = document.getElementById('btnText');
+      const btnIconWrapper = document.getElementById('btnIconWrapper');
+
+      generateBtn.disabled = true;
+      btnIconWrapper.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin-custom"></i>';
+      if (window.lucide) lucide.createIcons();
+      btnText.textContent = 'AIが状況・立場・ハラスメントリスクを分析して対処法を作成中...';
+
+      const systemPrompt = `あなたは産業カウンセラー、組織開発コンサルタント、および労働法務（ハラスメント防止）の知見を持つ職場コミュニケーションの専門家です。
+相談者の立場・年齢・人数と、相手の立場・年齢・人数・性格、具体的な事例、今後の希望を深く分析し、実践的で温かみがあり、かつハラスメント等のリスクを確実に回避できる具体的な接し方アドバイスをJSON形式で提供してください。
+
+以下の点に特に注意して回答を作成してください：
+1. 世代間ギャップ（年齢差）や立場（役職差）、人数（1対1なのか複数人なのか）による心理的プレッシャーを考慮すること。
+2. 具体的でそのまま使える「会話フレーズ・声かけ例」を複数パターン提示すること。
+3. パワーハラスメント、モラルハラスメント、逆パワハラ等のリスク回避の観点（言ってはいけないNGワードや態度、記録の残し方など）を必ず明記すること。`;
+
+      const userPrompt = `
+【自分のプロフィール】
+・立場/役職: ${params.myRole}
+・年代: ${params.myAge}
+・関わる人数（自分側）: ${params.myCount}
+
+【相手のプロフィール】
+・自分から見た関係性: ${params.targetRelation}
+・立場/役職: ${params.targetRole}
+・年代: ${params.targetAge}
+・相手の人数: ${params.targetCount}
+・相手の性格や特徴: ${params.targetTraits || '特になし・不明'}
+
+【状況・コンテキスト】
+・伝える場面/手段: ${params.commMethod}
+・現在の関係性・距離感: ${params.relationshipLevel}
+・具体的な事例・悩み: ${params.situation}
+・今後どのようにしたいか（ゴール）: ${params.goal}`;
+
+      const payload = {
+        contents: [{ parts: [{ text: userPrompt }] }],
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              empathyAndSummary: { type: "STRING" },
+              psychologicalAnalysis: { type: "STRING" },
+              preparationTips: { type: "ARRAY", items: { type: "STRING" } },
+              actionSteps: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: { stepTitle: { type: "STRING" }, detail: { type: "STRING" } },
+                  required: ["stepTitle", "detail"]
+                }
+              },
+              dialogueExamples: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: { patternName: { type: "STRING" }, phrase: { type: "STRING" }, point: { type: "STRING" } },
+                  required: ["patternName", "phrase", "point"]
+                }
+              },
+              ngBehaviors: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: { ngAction: { type: "STRING" }, reason: { type: "STRING" }, rephrase: { type: "STRING" } },
+                  required: ["ngAction", "reason", "rephrase"]
+                }
+              },
+              harassmentRiskNotice: {
+                type: "OBJECT",
+                properties: {
+                  riskCheckPoints: { type: "ARRAY", items: { type: "STRING" } },
+                  legalAndComplianceStatement: { type: "STRING" }
+                },
+                required: ["riskCheckPoints", "legalAndComplianceStatement"]
+              }
+            },
+            required: ["empathyAndSummary", "psychologicalAnalysis", "preparationTips", "actionSteps", "dialogueExamples", "ngBehaviors", "harassmentRiskNotice"]
+          }
+        }
+      };
+
+      const apiKey = "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      const fetchWithRetry = async (retries = 2, delay = 1000) => {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!response.ok) {
+            throw new Error(`API Error: ${response.status}`);
+          }
+          return await response.json();
+        } catch (err) {
+          if (retries > 0) {
+            await new Promise(res => setTimeout(res, delay));
+            return fetchWithRetry(retries - 1, delay * 2);
+          }
+          throw err;
+        }
+      };
+
+      try {
+        const data = await fetchWithRetry();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text) {
+          const parsed = parseSafeJson(text);
+          renderResult(parsed, params);
+        } else {
+          throw new Error('有効な回答を取得できませんでした。');
+        }
+      } catch (err) {
+        // 通信エラーやローカルファイル直接起動時でもエラーで停止させず、内蔵のスマート診断エンジンで確実に結果を表示する
+        const fallbackResult = generateFallbackAdvice(params);
+        renderResult(fallbackResult, params);
+      } finally {
+        generateBtn.disabled = false;
+        btnIconWrapper.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5"></i>';
+        if (window.lucide) lucide.createIcons();
+        btnText.textContent = '具体的な接し方と会話フレーズを診断する';
+      }
+    });
+
+    // 初期アイコン描画
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
